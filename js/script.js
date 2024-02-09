@@ -1,23 +1,22 @@
 let baseUrl = `https://api.flickr.com/services/rest`;
 let method = "flickr.photos.search";
-// Default settings, starts on the 1st page with 20 photos per page
-let currentPage = 1;
+// Default amount of photos per page
 let photosPerPage = 20;
 
-//Created a variable from the captured div with Id imgContainer
-let imgContainer = document.getElementById("imgContainer");
+//Created variables for DOM-elements
+const imgContainer = document.getElementById("imgContainer");
+const searchBox = document.getElementById("search-box");
+const searchForm = document.getElementById("search-form");
 
-async function fetchImage(keyword) {
+async function fetchImage(keyword, currentPage) {
   let apiUrl = `${baseUrl}?api_key=${pubkey}&method=${method}&text=${keyword}&page=${currentPage}&per_page=${photosPerPage}&format=json&nojsoncallback=1`;
-
+  
   try {
     const response = await fetch(apiUrl);
     // fetches data.photos
     const {photos} = await response.json();
     //Created a variable shortcut
-    let currentPage = photos.page;
-    let totalPages = photos.pages;
-
+    loadPagination(currentPage, photos.pages)
     //Created a loop to loop all the photos from data.photos.photo
     for (const img of photos.photo) {
       let imgSize = "q";
@@ -37,4 +36,18 @@ async function fetchImage(keyword) {
   }
 }
 
-fetchImage(keyword);
+fetchImage("monkeys", 1);
+
+function loadPagination(page, pages) {
+  //TODO
+}
+
+function searchImages() {
+  keyword = searchBox.value;
+  fetchImage(keyword, 1);
+}
+
+searchForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  searchImages();
+})
