@@ -2,21 +2,25 @@ let baseUrl = `https://api.flickr.com/services/rest`;
 let method = "flickr.photos.search";
 // Default amount of photos per page
 let photosPerPage = 20;
-
+let currentPage;
+let query;
 //Created variables for DOM-elements
 const imgContainer = document.getElementById("imgContainer");
 const searchBox = document.getElementById("search-box");
 const searchForm = document.getElementById("search-form");
+// Ta bort sen
 
 async function fetchImage(keyword, currentPage) {
+  imgContainer.innerHTML = "";
   let apiUrl = `${baseUrl}?api_key=${pubkey}&method=${method}&text=${keyword}&page=${currentPage}&per_page=${photosPerPage}&format=json&nojsoncallback=1`;
-  
+
   try {
     const response = await fetch(apiUrl);
     // fetches data.photos
-    const {photos} = await response.json();
+    const { photos } = await response.json();
+
     //Created a variable shortcut
-    loadPagination(currentPage, photos.pages)
+    loadPagination(currentPage, photos.pages, keyword);
     //Created a loop to loop all the photos from data.photos.photo
     for (const img of photos.photo) {
       let imgSize = "q";
@@ -36,10 +40,58 @@ async function fetchImage(keyword, currentPage) {
   }
 }
 
-fetchImage("monkeys", 1);
+fetchImage("monkeys", 6);
+const prevPage = document.getElementById("button-prev-page");
+prevPage.addEventListener("click", () => {
+  fetchImage(query, currentPage - 1);
+});
+const nextPage = document.getElementById("button-next-page");
+nextPage.addEventListener("click", () => {
+  fetchImage(query, currentPage + 1);
+});
+// const firstPage = document.getElementById("button-first-page");
+// firstPage.addEventListener("click", () => {
+//   fetchImage(query, 1);
+// });
+// const lastPage = document.getElementById("button-last-page");
+// lastPage.addEventListener("click", () => {
+//   fetchImage(query, totalPages);
+// });
 
-function loadPagination(page, pages) {
+function loadPagination(page, pages, keyword) {
   //TODO
+  currentPage = page;
+  query = keyword;
+
+  const pageList = document.querySelector(".page-list");
+
+  console.log(page);
+
+  pageList.innerHTML = "";
+  if (page > 3) {
+    const listItemFirstPage = document.createElement("li");
+    listItemFirstPage.classList.add("page-list__item");
+    listItemFirstPage.innerHTML = 1;
+    pageList.appendChild(listItemFirstPage);
+
+    const listItemDots = document.createElement("li");
+    listItemDots.innerHTML = "...";
+    pageList.appendChild(listItemDots);
+  }
+  for (let i = page - 2; i <= page + 2; i++) {
+    if (i > 0 && i < pages) {
+      const liElement = document.createElement("li");
+      liElement.classList.add("page-list__item");
+      liElement.innerHTML = i;
+      liElement.addEventListener("click", () => {
+        fetchImage(keyword, i);
+      });
+      if (i == page) {
+        liElement.classList.add("page-list__item--current");
+      }
+      pageList.appendChild(liElement);
+    }
+  }
 }
 
 function searchImages() {
@@ -50,4 +102,4 @@ function searchImages() {
 searchForm.addEventListener("submit", (event) => {
   event.preventDefault();
   searchImages();
-})
+});

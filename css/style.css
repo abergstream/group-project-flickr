@@ -45,8 +45,8 @@ body {
 }
 .page-list__item {
   border-radius: 50%;
-  width: 4rem;
-  height: 4rem;
+  width: 5rem;
+  height: 5rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -54,6 +54,10 @@ body {
   margin: 0;
   cursor: pointer;
   transition: background-color 250ms, color 250ms;
+}
+.page-list__item--current {
+  /* font-weight: bold; */
+  border: 2px solid rgb(118, 177, 255);
 }
 .page-list__item:hover {
   background-color: rgb(118, 177, 255);
