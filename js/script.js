@@ -1,13 +1,14 @@
 let baseUrl = `https://api.flickr.com/services/rest`;
 let method = "flickr.photos.search";
-let text = "monkey";
+
 let currentPage = 6;
-let apiUrl = `${baseUrl}?api_key=${pubkey}&method=${method}&text=${text}&page=${currentPage}&format=json&nojsoncallback=1`;
+
 
 //Created a variable from the captured div with Id imgContainer
 let imgContainer = document.getElementById("imgContainer");
 
 async function monkeySearch() {
+  let apiUrl = `${baseUrl}?api_key=${pubkey}&method=${method}&text=${text}&page=${currentPage}&format=json&nojsoncallback=1`;
   try {
     const response = await fetch(apiUrl);
     const data = await response.json();
@@ -34,3 +35,20 @@ async function monkeySearch() {
 }
 
 monkeySearch();
+
+
+
+const searchBox = document.getElementById("search-box");
+const searchForm = document.getElementById("search-form");
+
+let text = "";
+
+async function searchImages() {
+  keyword = searchBox.value;
+  fetchImage(keyword);
+}
+
+searchForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  searchImages();
+})
