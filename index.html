@@ -1,18 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="apikeys.js"></script>
-    <script src="js/script.js" defer></script>
-    <link rel="stylesheet" type="text/css" href="css/style.css" />
-    <title>Flickr - API</title>
-  </head>
-  <body>
-    <div class="wrapper">
-      <div class="search-bar"></div>
-      <div id="pagination"></div>
-      <div id="imgContainer"></div>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="apikeys.js"></script>
+  <script src="js/script.js" defer></script>
+  <link rel="stylesheet" type="text/css" href="css/style.css" />
+  <title>Flickr - API</title>
+</head>
+
+<body>
+  <div class="wrapper">
+
+    <div id="search-form">
+      <input type="text" id="search-box" placeholder="Search photos">
+      <button id="submit">Search</button>
     </div>
-  </body>
+
+
+    <div id="pagination"></div>
+    <div id="imgContainer"></div>
+  </div>
+</body>
+
 </html>
