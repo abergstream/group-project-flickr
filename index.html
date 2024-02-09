@@ -1,21 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <script src="apikeys.js"></script>
-  <script src="js/script.js" defer></script>
-  <link rel="stylesheet" type="text/css" href="css/style.css" />
-  <title>Flickr - API</title>
-</head>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="apikeys.js"></script>
+    <script src="js/script.js" defer></script>
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+    <title>Flickr - API</title>
+  </head>
+  <body>
+    <div class="wrapper">
+      <div id="search-form">
+        <input type="text" id="search-box" placeholder="Search photos">
+        <button id="submit">Search</button>
+      </div>
+      <div id="paginationContainer">
+        <button id="button-first-page" class="button-page">First</button>
+        <button id="button-prev-page" class="button-page">Prev</button>
+        <ul class="page-list">
+          <li class="page-list__item">4</li>
+          <li class="page-list__item">5</li>
+          <li class="page-list__item">6</li>
+          <li class="page-list__item">7</li>
+          <li class="page-list__item">8</li>
+        </ul>
+        <button id="button-next-page" class="button-page">Next</button>
+        <button id="button-last-page" class="button-page">Last</button>
+      </div>
+      <div id="imgContainer"></div>
 
-<body>
-  <div class="wrapper">
-
-    <div id="search-form">
-      <input type="text" id="search-box" placeholder="Search photos">
-      <button id="submit">Search</button>
     </div>
 
 
