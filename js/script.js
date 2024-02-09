@@ -12,7 +12,8 @@ const imgPerPage = document.querySelector(".img-per-page");
 
 async function fetchImage(keyword, currentPage) {
   imgContainer.innerHTML = "";
-  let apiUrl = `${baseUrl}?api_key=${pubkey}&method=${method}&text=${keyword}&page=${currentPage}&per_page=${photosPerPage}&format=json&nojsoncallback=1`;
+  // media=photos verkar ha fått bort felaktiga bilder, kanske APIn försökte läsa in videos i ett img-element
+  let apiUrl = `${baseUrl}?api_key=${pubkey}&method=${method}&text=${keyword}&page=${currentPage}&per_page=${photosPerPage}&format=json&nojsoncallback=1&media=photos`;
 
   try {
     const response = await fetch(apiUrl);
@@ -67,7 +68,7 @@ function loadPagination(page, pages, keyword) {
   query = keyword;
 
   const pageList = document.querySelector(".page-list");
-
+  console.log(pages);
   pageList.innerHTML = "";
   if (page > 3) {
     const listItemFirstPage = document.createElement("li");
