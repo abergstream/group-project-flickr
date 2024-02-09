@@ -12,7 +12,7 @@ async function monkeySearch() {
     const response = await fetch(apiUrl);
     const data = await response.json();
 
-    //Created a variable shortcut 
+    //Created a variable shortcut
     const photos = data.photos;
     let currentPage = photos.page;
     let totalPages = photos.pages;
