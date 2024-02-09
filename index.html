@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -10,7 +11,10 @@
   </head>
   <body>
     <div class="wrapper">
-      <div class="search-bar"></div>
+      <div id="search-form">
+        <input type="text" id="search-box" placeholder="Search photos">
+        <button id="submit">Search</button>
+      </div>
       <div id="paginationContainer">
         <button id="button-first-page" class="button-page">First</button>
         <button id="button-prev-page" class="button-page">Prev</button>
@@ -25,6 +29,13 @@
         <button id="button-last-page" class="button-page">Last</button>
       </div>
       <div id="imgContainer"></div>
+
     </div>
-  </body>
+
+
+    <div id="pagination"></div>
+    <div id="imgContainer"></div>
+  </div>
+</body>
+
 </html>
