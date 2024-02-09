@@ -15,6 +15,29 @@ body {
   flex-direction: column;
   gap: 2rem;
 }
+
+form {
+  margin: 50px 0;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+}
+
+form input {
+  background-color: #fff;
+  border: solid 2px rgb(0, 98, 221);
+  border-radius: 5px 0 0 5px;
+  padding-left: 15px;
+  width: 490px;
+}
+
+form button {
+  background-color: rgb(0, 98, 221);
+  border: 0;
+  border-radius: 0 5px 5px 0;
+  padding: 0 15px;
+}
+
 #paginationContainer {
   display: flex;
   justify-content: center;
