@@ -1,4 +1,4 @@
-let baseUrl = `https://api.flickr.com/services/rest`;
+let baseUrl = `https://api.flickr.com/services/rest/`;
 let method = "flickr.photos.search";
 // Default amount of photos per page
 let photosPerPage = 20;
@@ -8,7 +8,7 @@ let query;
 const imgContainer = document.getElementById("imgContainer");
 const searchBox = document.getElementById("search-box");
 const searchForm = document.getElementById("search-form");
-// Ta bort sen
+const imgPerPage = document.querySelector(".img-per-page");
 
 async function fetchImage(keyword, currentPage) {
   imgContainer.innerHTML = "";
@@ -63,13 +63,10 @@ function loadImage(img) {
 }
 
 function loadPagination(page, pages, keyword) {
-  //TODO
   currentPage = page;
   query = keyword;
 
   const pageList = document.querySelector(".page-list");
-
-  console.log(page);
 
   pageList.innerHTML = "";
   if (page > 3) {
@@ -98,14 +95,17 @@ function loadPagination(page, pages, keyword) {
   }
 }
 
-function searchImages() {
-  keyword = searchBox.value;
-  fetchImage(keyword, 1);
-}
+// Funktion att ändra photosPerPage när man ändrar value i selecten
+imgPerPage.addEventListener("change", () => {
+  photosPerPage = imgPerPage.value;
+  fetchImage(query, currentPage);
+});
 
+// Lade in fetchImage direkt i eventlistenern
+// la searchBox.value direkt i funktionen istället för variabel
 searchForm.addEventListener("submit", (event) => {
   event.preventDefault();
-  searchImages();
+  fetchImage(searchBox.value, 1);
 });
 
 fetchImage("monkey", 1);
