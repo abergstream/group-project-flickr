@@ -1,4 +1,4 @@
-let baseUrl = `https://api.flickr.com/services/rest`;
+let baseUrl = `https://api.flickr.com/services/rest/`;
 let method = "flickr.photos.search";
 // Default amount of photos per page
 let photosPerPage = 20;
@@ -8,11 +8,12 @@ let query;
 const imgContainer = document.getElementById("imgContainer");
 const searchBox = document.getElementById("search-box");
 const searchForm = document.getElementById("search-form");
-// Ta bort sen
+const imgPerPage = document.querySelector(".img-per-page");
 
 async function fetchImage(keyword, currentPage) {
   imgContainer.innerHTML = "";
-  let apiUrl = `${baseUrl}?api_key=${pubkey}&method=${method}&text=${keyword}&page=${currentPage}&per_page=${photosPerPage}&format=json&nojsoncallback=1`;
+  // media=photos verkar ha fått bort felaktiga bilder, kanske APIn försökte läsa in videos i ett img-element
+  let apiUrl = `${baseUrl}?api_key=${pubkey}&method=${method}&text=${keyword}&page=${currentPage}&per_page=${photosPerPage}&format=json&nojsoncallback=1&media=photos`;
 
   try {
     const response = await fetch(apiUrl);
@@ -63,14 +64,11 @@ function loadImage(img) {
 }
 
 function loadPagination(page, pages, keyword) {
-  //TODO
   currentPage = page;
   query = keyword;
 
   const pageList = document.querySelector(".page-list");
-
-  console.log(page);
-
+  console.log(pages);
   pageList.innerHTML = "";
   if (page > 3) {
     const listItemFirstPage = document.createElement("li");
@@ -98,14 +96,17 @@ function loadPagination(page, pages, keyword) {
   }
 }
 
-function searchImages() {
-  keyword = searchBox.value;
-  fetchImage(keyword, 1);
-}
+// Funktion att ändra photosPerPage när man ändrar value i selecten
+imgPerPage.addEventListener("change", () => {
+  photosPerPage = imgPerPage.value;
+  fetchImage(query, currentPage);
+});
 
+// Lade in fetchImage direkt i eventlistenern
+// la searchBox.value direkt i funktionen istället för variabel
 searchForm.addEventListener("submit", (event) => {
   event.preventDefault();
-  searchImages();
+  fetchImage(searchBox.value, 1);
 });
 
 fetchImage("monkey", 1);

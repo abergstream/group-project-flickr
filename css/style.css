@@ -14,6 +14,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 2rem;
+  align-items: center;
 }
 
 form {
@@ -79,10 +80,38 @@ form button {
   transition: background-color 250ms, color 250ms;
 }
 .page-list__item--current {
-  /* font-weight: bold; */
   border: 2px solid rgb(118, 177, 255);
 }
 .page-list__item:hover {
   background-color: rgb(118, 177, 255);
   color: #fff;
+}
+#imgContainer {
+  display: flex;
+  flex-wrap: wrap;
+  width: calc((150px * 6) + (1rem * 5));
+  gap: 1rem;
+}
+.select-container {
+  position: relative;
+}
+.img-per-page {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 150px;
+  padding: 1.5rem;
+  border: 2px solid rgb(118, 177, 255);
+  border-radius: 0.5rem;
+  cursor: pointer;
+  outline: none;
+}
+.select-arrow {
+  position: absolute;
+  right: 1.5rem;
+  top: 50%;
+  transform: translateY(-3.5px);
+  width: 10px;
+  height: 10px;
+  border: 0.7rem solid;
+  border-color: rgb(118, 177, 255) transparent transparent transparent;
 }
