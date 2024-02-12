@@ -73,7 +73,7 @@ function loadImage(img, index) {
   imgElement.setAttribute("alt", img.title);
   imgContainer.appendChild(imgElement);
   imgElement.addEventListener("click", () => {
-    openLightbox(img, index, photoArray);
+    openLightbox(img, index);
   });
 }
 
@@ -88,21 +88,21 @@ function openLightbox(img, index) {
   lightboxPhoto.src = imgUrl;
   console.log(img);
 
-  const lightboxThumb1 = createThumbnail(photoArray[prevIndex], prevIndex, photoArray);
-  const lightboxThumb2 = createThumbnail(img, index, photoArray);
+  const lightboxThumb1 = createThumbnail(photoArray[prevIndex], prevIndex);
+  const lightboxThumb2 = createThumbnail(img, index);
   lightboxThumb2.classList.add("active-thumb");
-  const lightboxThumb3 = createThumbnail(photoArray[nextIndex], nextIndex, photoArray);
+  const lightboxThumb3 = createThumbnail(photoArray[nextIndex], nextIndex);
 
   lightboxThumbnail.innerText = "";
   lightboxThumbnail.append(lightboxThumb1, lightboxThumb2, lightboxThumb3);
   lightbox.style.display = "flex";
 }
 
-function createThumbnail(img, index, photoArray) {
+function createThumbnail(img, index) {
   const thumbUrl = `https://farm${img.farm}.staticflickr.com/${img.server}/${img.id}_${img.secret}_t.jpg`;
   const thumb = document.createElement("img");
   thumb.addEventListener("click", () => {
-    openLightbox(photoArray[index], index, photoArray);
+    openLightbox(photoArray[index], index);
   })
   thumb.src = thumbUrl;
   return thumb;

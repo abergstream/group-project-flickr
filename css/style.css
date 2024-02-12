@@ -127,6 +127,7 @@ form button {
   height: 10px;
   border: 0.7rem solid;
   border-color: rgb(118, 177, 255) transparent transparent transparent;
+  pointer-events: none;
 }
 
 .lightbox {
