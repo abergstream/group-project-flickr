@@ -3,13 +3,16 @@
 * {
   box-sizing: border-box;
 }
+
 html {
   font-size: 10px;
 }
+
 body {
   font-size: 1.6rem;
   font-family: Roboto;
 }
+
 .wrapper {
   display: flex;
   flex-direction: column;
@@ -45,6 +48,7 @@ form button {
   align-items: center;
   gap: 1rem;
 }
+
 .button-page {
   background-color: transparent;
   border: 2px solid rgb(118, 177, 255);
@@ -54,10 +58,12 @@ form button {
   border-radius: 0.5rem;
   transition: background-color 250ms, color 250ms;
 }
+
 .button-page:hover {
   background-color: rgb(118, 177, 255);
   color: white;
 }
+
 .page-list {
   display: flex;
   list-style: none;
@@ -67,6 +73,7 @@ form button {
   padding: 0;
   margin: 0;
 }
+
 .page-list__item {
   border-radius: 50%;
   width: 5rem;
@@ -79,22 +86,27 @@ form button {
   cursor: pointer;
   transition: background-color 250ms, color 250ms;
 }
+
 .page-list__item--current {
   border: 2px solid rgb(118, 177, 255);
 }
+
 .page-list__item:hover {
   background-color: rgb(118, 177, 255);
   color: #fff;
 }
+
 #imgContainer {
   display: flex;
   flex-wrap: wrap;
-  width: calc((150px * 6) + (1rem * 5));
-  gap: 1rem;
+  width: calc((150px * 5) + (2rem * 4));
+  gap: 2rem;
 }
+
 .select-container {
   position: relative;
 }
+
 .img-per-page {
   appearance: none;
   -webkit-appearance: none;
@@ -105,6 +117,7 @@ form button {
   cursor: pointer;
   outline: none;
 }
+
 .select-arrow {
   position: absolute;
   right: 1.5rem;
@@ -114,4 +127,40 @@ form button {
   height: 10px;
   border: 0.7rem solid;
   border-color: rgb(118, 177, 255) transparent transparent transparent;
+}
+
+.lightbox {
+  height: 100svh;
+  width: 100svw;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  left: 0;
+  top: 0;
+  backdrop-filter: blur(2px);
+  gap: 3rem;
+}
+
+.lightbox__main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+.lightbox__thumbnail {
+  display: flex;
+  gap: 1rem;
+}
+
+.lightbox__arrow-icon {
+  height: 80px;
+  fill: #dadada;
+}
+.active-thumb {
+  border: 3px solid #dadada;
+  box-shadow: 0 0 15px #dadada;
 }
