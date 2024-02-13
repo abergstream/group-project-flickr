@@ -22,7 +22,7 @@ imagePerPage.addEventListener("change", () => {
 
 async function fetchImage(keyword, currentPage) {
   imgContainer.innerHTML = "";
-  let apiUrl = `${baseUrl}?api_key=${pubkey}&method=${method}&text=${keyword}&page=${currentPage}&per_page=${photosPerPage}&format=json&nojsoncallback=1`;
+  let apiUrl = `${baseUrl}?api_key=${pubkey}&method=${method}&text=${keyword}&page=${currentPage}&per_page=${photosPerPage}&format=json&nojsoncallback=1&media=photos`;
 
   try {
     const response = await fetch(apiUrl);
@@ -64,6 +64,7 @@ function loadImage(img, index) {
   let imgUrl = `https://farm${img.farm}.staticflickr.com/${img.server}/${img.id}_${img.secret}_${imgSize}.jpg`;
   //Element is created and value is given to a variable
   const imgElement = document.createElement("img");
+  imgElement.classList.add("image");
   //Src of the img element is given the value of url
   imgElement.src = imgUrl;
   //Appending the new element to the div container
@@ -94,7 +95,7 @@ function openLightbox(img, index) {
 
   const lightboxThumb2 = createThumbnail(img, index);
   lightboxThumbnail.appendChild(lightboxThumb2);
-  lightboxThumb2.classList.add("active-thumb");
+  lightboxThumb2.classList.add("lightbox__thumb--active");
 
   if (nextIndex < photoArray.length) {
     const lightboxThumb3 = createThumbnail(photoArray[nextIndex], nextIndex);
@@ -105,14 +106,15 @@ function openLightbox(img, index) {
 
 const lightboxEffect = document.getElementById("lightbox-effect");
 lightboxEffect.addEventListener("click", (e) => {
-  if(e.target == e.currentTarget){
+  if (e.target == e.currentTarget) {
     lightboxEffect.style.display = "none";
   }
-})
+});
 
 function createThumbnail(img, index) {
   const thumbUrl = `https://farm${img.farm}.staticflickr.com/${img.server}/${img.id}_${img.secret}_t.jpg`;
   const thumb = document.createElement("img");
+  thumb.classList.add("lightbox__thumb");
   thumb.addEventListener("click", () => {
     openLightbox(photoArray[index], index);
   });
