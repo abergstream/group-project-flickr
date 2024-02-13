@@ -9,38 +9,84 @@
     <title>Flickr - API</title>
   </head>
 
-  <body>
-    <header class="flickr-header">
-      <form class="search-form" id="search-form">
-        <input
-          class="search-box"
-          type="text"
-          id="search-box"
-          placeholder="Search photos"
-        />
-        <button class="search-button" id="submit">
-          <img src="images/search-icon.png" alt="search-icon" />
-        </button>
-      </form>
-      <section class="select-container">
-        <select class="img-per-page">
-          <option value="20" selected>20 per page</option>
-          <option value="50">50 per page</option>
-          <option value="75">75 per page</option>
-          <option value="100">100 per page</option>
-        </select>
-        <span class="select-arrow"></span>
-      </section>
-      <!-- Slut på select-delen -->
-    </header>
-    <div class="wrapper">
-      <div id="paginationContainer">
-        <button id="button-prev-page" class="button-page">&lt;</button>
-        <ul class="page-list"></ul>
-        <button id="button-next-page" class="button-page">&gt;</button>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="apikeys.js"></script>
+  <script src="js/script.js" defer></script>
+  <link rel="stylesheet" type="text/css" href="css/style.css" />
+  <title>Flickr - API</title>
+</head>
+
+<body>
+  <header class="flickr-header">
+    <form class="search-form" id="search-form">
+      <input
+        class="search-box"
+        type="text"
+        id="search-box"
+        placeholder="Search photos"
+      />
+      <button class="search-button" id="submit">
+        <img src="images/search-icon.png" alt="search-icon" />
+      </button>
+    </form>
+    <section class="select-container">
+      <select class="img-per-page">
+        <option value="20" selected>20 per page</option>
+        <option value="50">50 per page</option>
+        <option value="75">75 per page</option>
+        <option value="100">100 per page</option>
+      </select>
+      <span class="select-arrow"></span>
+    </section>
+    <!-- Slut på select-delen -->
+  </header>
+  <div class="wrapper">
+    <!-- Denna ska inte vara här, men ville inte 
+      ta beslut om placering så lade den högst upp -->
+    <section class="select-container">
+      <select class="img-per-page">
+        <option value="20" selected>20</option>
+        <option value="50">50</option>
+        <option value="75">75</option>
+        <option value="100">100</option>
+      </select>
+      <span class="select-arrow"></span>
+    </section>
+    <!-- Slut på select-delen -->
+    <form id="search-form">
+      <input type="text" id="search-box" placeholder="Search photos" />
+      <button id="submit">
+        <img src="images/search-icon.png" alt="search-icon" />
+      </button>
+    </form>
+    <div id="paginationContainer">
+      <button id="button-prev-page" class="button-page">&lt;</button>
+      <ul class="page-list"></ul>
+      <button id="button-next-page" class="button-page">&gt;</button>
+    </div>
+    <div id="pagination"></div>
+    <div id="imgContainer"></div>
+  </div>
+  <section class="lightbox" id="lightbox-effect">
+    <div class="lightbox__main">
+      <div class="lightbox__arrow-container" id="prevArrow">
+        <svg class="lightbox__arrow-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <title>chevron-left</title>
+          <path d="M15.41,16.58L10.83,12L15.41,7.41L14,6L8,12L14,18L15.41,16.58Z" />
+        </svg>
       </div>
-      <div id="pagination"></div>
-      <div id="imgContainer"></div>
+      <img id="lightboxPhoto" src="https://farm66.staticflickr.com/65535/53523280572_18140da214_b.jpg" alt="monkeyMan">
+      <div class="lightbox__arrow-container" id="nextArrow">
+        <svg class="lightbox__arrow-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <title>chevron-right</title>
+          <path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" />
+        </svg>
+      </div>
+    </div>
+    <div class="lightbox__thumbnail" id="lightboxThumbnail">
     </div>
     <section class="lightbox">
       <div class="lightbox__main">
