@@ -134,27 +134,12 @@ function loadPagination(page, pages, keyword) {
   query = keyword;
   pageList.innerHTML = "";
 
-  // Will only show the 1st page after the 3rd
-  if (page > 3) {
-    const listItemFirstPage = document.createElement("li");
-    listItemFirstPage.classList.add("page-list__item");
-    listItemFirstPage.innerHTML = 1;
-    pageList.appendChild(listItemFirstPage);
-
-    const listItemDots = document.createElement("li");
-    listItemDots.innerHTML = "...";
-    pageList.appendChild(listItemDots);
-  }
-
-  // Functionality to navigate through the pages, and only through the indexes of the page
-  for (let i = page - 2; i <= page + 2; i++) {
+  for (let i = page - 1; i <= page + 1; i++) {
     if (i > 0 && i < pages) {
       const liElement = document.createElement("li");
       liElement.classList.add("page-list__item");
       liElement.innerHTML = i;
-      liElement.addEventListener("click", () => {
-        fetchImage(keyword, i);
-      });
+
       if (i == page) {
         liElement.classList.add("page-list__item--current");
       }
