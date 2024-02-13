@@ -22,7 +22,7 @@ imagePerPage.addEventListener("change", () => {
 
 async function fetchImage(keyword, currentPage) {
   imgContainer.innerHTML = "";
-  let apiUrl = `${baseUrl}?api_key=${pubkey}&method=${method}&text=${keyword}&page=${currentPage}&per_page=${photosPerPage}&format=json&nojsoncallback=1`;
+  let apiUrl = `${baseUrl}?api_key=${pubkey}&method=${method}&text=${keyword}&page=${currentPage}&per_page=${photosPerPage}&format=json&nojsoncallback=1&media=photos`;
 
   try {
     const response = await fetch(apiUrl);
