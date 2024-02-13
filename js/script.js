@@ -129,24 +129,15 @@ function loadPagination(page, pages, keyword) {
   const pageList = document.querySelector(".page-list");
 
   pageList.innerHTML = "";
-  if (page > 3) {
-    const listItemFirstPage = document.createElement("li");
-    listItemFirstPage.classList.add("page-list__item");
-    listItemFirstPage.innerHTML = 1;
-    pageList.appendChild(listItemFirstPage);
 
-    const listItemDots = document.createElement("li");
-    listItemDots.innerHTML = "...";
-    pageList.appendChild(listItemDots);
-  }
-  for (let i = page - 2; i <= page + 2; i++) {
+  let j = 1;
+  for (let i = page - 1; i <= page + 1; i++) {
     if (i > 0 && i < pages) {
       const liElement = document.createElement("li");
       liElement.classList.add("page-list__item");
       liElement.innerHTML = i;
-      liElement.addEventListener("click", () => {
-        fetchImage(keyword, i);
-      });
+      liElement.classList.add(`page-item-${j++}`);
+
       if (i == page) {
         liElement.classList.add("page-list__item--current");
       }
