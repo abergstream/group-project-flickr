@@ -23,7 +23,7 @@ imagePerPage.addEventListener("change", () => {
 
 async function fetchImage(keyword, currentPage) {
   imgContainer.innerHTML = "";
-  let apiUrl = `${baseUrl}?api_key=${pubkey}&method=${method}&text=${keyword}&page=${currentPage}&per_page=${photosPerPage}&format=json&nojsoncallback=1`;
+  let apiUrl = `${baseUrl}?api_key=${pubkey}&method=${method}&text=${keyword}&page=${currentPage}&per_page=${photosPerPage}&format=json&nojsoncallback=1&media=photos`;
 
   try {
     const response = await fetch(apiUrl);
@@ -86,7 +86,6 @@ function openLightbox(img, index) {
 
   const imgUrl = `https://farm${img.farm}.staticflickr.com/${img.server}/${img.id}_${img.secret}_b.jpg`;
   lightboxPhoto.src = imgUrl;
-  console.log(img);
 
   const lightboxThumb1 = createThumbnail(photoArray[prevIndex], prevIndex);
   const lightboxThumb2 = createThumbnail(img, index);
@@ -97,6 +96,13 @@ function openLightbox(img, index) {
   lightboxThumbnail.append(lightboxThumb1, lightboxThumb2, lightboxThumb3);
   lightbox.style.display = "flex";
 }
+
+let lightboxEffect = document.getElementById("lightbox-effect");
+lightboxEffect.addEventListener("click", (e) => {
+  if(e.target == e.currentTarget){
+    lightboxEffect.style.display = "none";
+  }
+})
 
 function createThumbnail(img, index) {
   const thumbUrl = `https://farm${img.farm}.staticflickr.com/${img.server}/${img.id}_${img.secret}_t.jpg`;
