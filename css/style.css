@@ -5,6 +5,7 @@
 }
 * {
   box-sizing: border-box;
+  user-select: none;
 }
 
 html {
@@ -24,8 +25,8 @@ body {
     rgba(156, 161, 184, 1) 0%,
     rgba(106, 113, 139, 1) 100%
   );
-
-  min-height: 100svh;
+  margin: 2rem 0 0 0;
+  min-height: calc(100svh - 2rem);
 }
 .flickr-header {
   width: calc((150px * 5) + (2rem * 4));
@@ -189,15 +190,23 @@ body {
   max-width: 80svw;
   max-height: 80svh;
 }
-.active-thumb {
+.lightbox__thumb {
+  cursor: pointer;
+}
+.lightbox__thumb--active {
   border: 3px solid #dadada;
   box-shadow: 0 0 15px #dadada;
 }
-
 
 .lightbox__arrow-container {
   height: 100%;
   display: flex;
   align-items: center;
+  cursor: pointer;
 }
-
+.lightbox__arrow-container:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+.image {
+  cursor: pointer;
+}
