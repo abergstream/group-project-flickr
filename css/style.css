@@ -161,6 +161,10 @@ form button {
   height: 80px;
   fill: #dadada;
 }
+.lightbox__image {
+  max-width: 80svw;
+  max-height: 80svh;
+}
 .active-thumb {
   border: 3px solid #dadada;
   box-shadow: 0 0 15px #dadada;

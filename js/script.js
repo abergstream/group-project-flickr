@@ -81,6 +81,7 @@ function openLightbox(img, index) {
 
   const imgUrl = `https://farm${img.farm}.staticflickr.com/${img.server}/${img.id}_${img.secret}_b.jpg`;
   lightboxPhoto.src = imgUrl;
+  lightboxPhoto.classList.add("lightbox__image");
   console.log(img);
   lightboxThumbnail.innerText = "";
 
