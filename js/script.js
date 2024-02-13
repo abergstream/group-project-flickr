@@ -1,47 +1,22 @@
 const baseUrl = `https://api.flickr.com/services/rest`;
 const method = "flickr.photos.search";
-// Default amount of photos per page
+
+// Global Variables
 let photosPerPage = 20;
 let currentPage;
 let query;
-
 let photoArray;
 let prevIndex;
 let nextIndex;
-//Created variables for DOM-elements
-const imgContainer = document.getElementById("imgContainer");
-const searchBox = document.getElementById("search-box");
-const searchForm = document.getElementById("search-form");
-const imagePerPage = document.querySelector(".img-per-page");
-// Ta bort sen
 
+// DOM-elements with their corresponding EventListeners
+const imgContainer = document.getElementById("imgContainer");
+
+const imagePerPage = document.querySelector(".img-per-page");
 imagePerPage.addEventListener("change", () => {
   photosPerPage = imagePerPage.value;
   fetchImage(query, currentPage);
 });
-
-async function fetchImage(keyword, currentPage) {
-  imgContainer.innerHTML = "";
-  let apiUrl = `${baseUrl}?api_key=${pubkey}&method=${method}&text=${keyword}&page=${currentPage}&per_page=${photosPerPage}&format=json&nojsoncallback=1&media=photos`;
-
-  try {
-    const response = await fetch(apiUrl);
-    // fetches photos from our data (data.photos)
-    const { photos } = await response.json();
-    //Created a variable shortcut for pagination
-    loadPagination(currentPage, photos.pages, keyword);
-    // clears our images when we change the page or when we do a new search
-    imgContainer.innerHTML = "";
-    // Starts a loop and calls a function to load and append images to the HTML doc
-    photoArray = photos.photo;
-    photos.photo.forEach((img, index) => {
-      loadImage(img, index);
-    });
-  } catch (error) {
-    console.error("Error: " + error);
-  }
-}
-
 const prevPage = document.getElementById("button-prev-page");
 prevPage.addEventListener("click", () => {
   fetchImage(query, currentPage - 1);
@@ -58,41 +33,75 @@ const nextArrow = document.getElementById("nextArrow");
 nextArrow.addEventListener("click", () => {
   openLightbox(photoArray[nextIndex], nextIndex);
 });
+const searchBox = document.getElementById("search-box");
+const searchForm = document.getElementById("search-form");
+searchForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  searchImages();
+});
+const lightboxEffect = document.getElementById("lightbox-effect");
+lightboxEffect.addEventListener("click", (e) => {
+  if (e.target == e.currentTarget) {
+    lightboxEffect.style.display = "none";
+  }
+});
+
+// Main function
+async function fetchImage(keyword, currentPage) {
+  const apiUrl = `${baseUrl}?api_key=${pubkey}&method=${method}&text=${keyword}&page=${currentPage}&per_page=${photosPerPage}&format=json&nojsoncallback=1&media=photos`;
+  try {
+    const response = await fetch(apiUrl);
+    // Fetches photos from our data (data.photos)
+    const { photos } = await response.json();
+    photoArray = photos.photo;
+    // Calls our pagination function
+    loadPagination(currentPage, photos.pages, keyword);
+    // Clears our images when we change the page or when we do a new search
+    imgContainer.innerHTML = "";
+    // Loops through the photoArray and appends our images to the current page
+    photoArray.forEach((img, index) => {
+      loadImage(img, index);
+    });
+  } catch (error) {
+    console.error("Error: " + error);
+  }
+}
 
 function loadImage(img, index) {
-  let imgSize = "q";
-  let imgUrl = `https://farm${img.farm}.staticflickr.com/${img.server}/${img.id}_${img.secret}_${imgSize}.jpg`;
-  //Element is created and value is given to a variable
+  const imgUrl = `https://farm${img.farm}.staticflickr.com/${img.server}/${img.id}_${img.secret}_q.jpg`;
   const imgElement = document.createElement("img");
   imgElement.classList.add("image");
-  //Src of the img element is given the value of url
+  // Our API response gives imgElement the sourceimage, and we add alt-text functionality
   imgElement.src = imgUrl;
-  //Appending the new element to the div container
   imgElement.setAttribute("alt", img.title);
   imgContainer.appendChild(imgElement);
+
+  // Adds an EventListener to our images for lightbox functionality
   imgElement.addEventListener("click", () => {
     openLightbox(img, index);
   });
 }
 
 function openLightbox(img, index) {
+  const imgUrl = `https://farm${img.farm}.staticflickr.com/${img.server}/${img.id}_${img.secret}_b.jpg`;
   const lightboxPhoto = document.getElementById("lightboxPhoto");
   const lightboxThumbnail = document.getElementById("lightboxThumbnail");
   const lightbox = document.querySelector(".lightbox");
 
-  const imgUrl = `https://farm${img.farm}.staticflickr.com/${img.server}/${img.id}_${img.secret}_b.jpg`;
+  // API response gives our lightboxPhoto its source like in loadImage(), and removes our previous lightbox thumbnails
   lightboxPhoto.src = imgUrl;
   lightboxPhoto.classList.add("lightbox__image");
   lightboxThumbnail.innerText = "";
 
+  // These are used to point to the index of our thumbnails
   prevIndex = index - 1;
   nextIndex = index + 1;
 
+  // We create our thumbnails and append, and we use if-statements for the first & last thumbnail to avoid conflicts with the index
   if (index > 0) {
     const lightboxThumb1 = createThumbnail(photoArray[prevIndex], prevIndex);
     lightboxThumbnail.appendChild(lightboxThumb1);
   }
-
   const lightboxThumb2 = createThumbnail(img, index);
   lightboxThumbnail.appendChild(lightboxThumb2);
   lightboxThumb2.classList.add("lightbox__thumb--active");
@@ -101,16 +110,12 @@ function openLightbox(img, index) {
     const lightboxThumb3 = createThumbnail(photoArray[nextIndex], nextIndex);
     lightboxThumbnail.appendChild(lightboxThumb3);
   }
+
+  // This will change the display from none to flex, which will show our lightbox
   lightbox.style.display = "flex";
 }
 
-const lightboxEffect = document.getElementById("lightbox-effect");
-lightboxEffect.addEventListener("click", (e) => {
-  if (e.target == e.currentTarget) {
-    lightboxEffect.style.display = "none";
-  }
-});
-
+// Creates thumbnails for the lightbox, and returns thumb to be used by openLightbox
 function createThumbnail(img, index) {
   const thumbUrl = `https://farm${img.farm}.staticflickr.com/${img.server}/${img.id}_${img.secret}_t.jpg`;
   const thumb = document.createElement("img");
@@ -122,21 +127,18 @@ function createThumbnail(img, index) {
   return thumb;
 }
 
+// Function used to navigate through our pages
 function loadPagination(page, pages, keyword) {
+  const pageList = document.querySelector(".page-list");
   currentPage = page;
   query = keyword;
-
-  const pageList = document.querySelector(".page-list");
-
   pageList.innerHTML = "";
 
-  let j = 1;
   for (let i = page - 1; i <= page + 1; i++) {
     if (i > 0 && i < pages) {
       const liElement = document.createElement("li");
       liElement.classList.add("page-list__item");
       liElement.innerHTML = i;
-      liElement.classList.add(`page-item-${j++}`);
 
       if (i == page) {
         liElement.classList.add("page-list__item--current");
@@ -146,14 +148,11 @@ function loadPagination(page, pages, keyword) {
   }
 }
 
+// calls fetchImage when you search
 function searchImages() {
-  keyword = searchBox.value;
-  fetchImage(keyword, 1);
+  search = searchBox.value;
+  fetchImage(search, 1);
 }
 
-searchForm.addEventListener("submit", (event) => {
-  event.preventDefault();
-  searchImages();
-});
-
+// Default load query
 fetchImage("monkey", 1);
