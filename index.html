@@ -10,25 +10,30 @@
   </head>
 
   <body>
-    <div class="wrapper">
-      <!-- Denna ska inte vara här, men ville inte 
-      ta beslut om placering så lade den högst upp -->
+    <header class="flickr-header">
+      <form class="search-form" id="search-form">
+        <input
+          class="search-box"
+          type="text"
+          id="search-box"
+          placeholder="Search photos"
+        />
+        <button class="search-button" id="submit">
+          <img src="images/search-icon.png" alt="search-icon" />
+        </button>
+      </form>
       <section class="select-container">
         <select class="img-per-page">
-          <option value="20" selected>20</option>
-          <option value="50">50</option>
-          <option value="75">75</option>
-          <option value="100">100</option>
+          <option value="20" selected>20 per page</option>
+          <option value="50">50 per page</option>
+          <option value="75">75 per page</option>
+          <option value="100">100 per page</option>
         </select>
         <span class="select-arrow"></span>
       </section>
       <!-- Slut på select-delen -->
-      <form id="search-form">
-        <input type="text" id="search-box" placeholder="Search photos" />
-        <button id="submit">
-          <img src="images/search-icon.png" alt="search-icon" />
-        </button>
-      </form>
+    </header>
+    <div class="wrapper">
       <div id="paginationContainer">
         <button id="button-prev-page" class="button-page">&lt;</button>
         <ul class="page-list"></ul>
