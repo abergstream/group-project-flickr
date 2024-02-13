@@ -82,7 +82,6 @@ function openLightbox(img, index) {
   const imgUrl = `https://farm${img.farm}.staticflickr.com/${img.server}/${img.id}_${img.secret}_b.jpg`;
   lightboxPhoto.src = imgUrl;
   lightboxPhoto.classList.add("lightbox__image");
-  console.log(img);
   lightboxThumbnail.innerText = "";
 
   prevIndex = index - 1;
@@ -103,6 +102,13 @@ function openLightbox(img, index) {
   }
   lightbox.style.display = "flex";
 }
+
+const lightboxEffect = document.getElementById("lightbox-effect");
+lightboxEffect.addEventListener("click", (e) => {
+  if(e.target == e.currentTarget){
+    lightboxEffect.style.display = "none";
+  }
+})
 
 function createThumbnail(img, index) {
   const thumbUrl = `https://farm${img.farm}.staticflickr.com/${img.server}/${img.id}_${img.secret}_t.jpg`;
