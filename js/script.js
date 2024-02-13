@@ -1,5 +1,5 @@
-let baseUrl = `https://api.flickr.com/services/rest`;
-let method = "flickr.photos.search";
+const baseUrl = `https://api.flickr.com/services/rest`;
+const method = "flickr.photos.search";
 // Default amount of photos per page
 let photosPerPage = 20;
 let currentPage;
@@ -22,7 +22,7 @@ imagePerPage.addEventListener("change", () => {
 
 async function fetchImage(keyword, currentPage) {
   imgContainer.innerHTML = "";
-  let apiUrl = `${baseUrl}?api_key=${pubkey}&method=${method}&text=${keyword}&page=${currentPage}&per_page=${photosPerPage}&format=json&nojsoncallback=1&media=photos`;
+  let apiUrl = `${baseUrl}?api_key=${pubkey}&method=${method}&text=${keyword}&page=${currentPage}&per_page=${photosPerPage}&format=json&nojsoncallback=1`;
 
   try {
     const response = await fetch(apiUrl);
@@ -81,7 +81,6 @@ function openLightbox(img, index) {
 
   const imgUrl = `https://farm${img.farm}.staticflickr.com/${img.server}/${img.id}_${img.secret}_b.jpg`;
   lightboxPhoto.src = imgUrl;
-
   lightboxPhoto.classList.add("lightbox__image");
   console.log(img);
   lightboxThumbnail.innerText = "";
@@ -94,7 +93,6 @@ function openLightbox(img, index) {
     lightboxThumbnail.appendChild(lightboxThumb1);
   }
 
-
   const lightboxThumb2 = createThumbnail(img, index);
   lightboxThumbnail.appendChild(lightboxThumb2);
   lightboxThumb2.classList.add("active-thumb");
@@ -105,13 +103,6 @@ function openLightbox(img, index) {
   }
   lightbox.style.display = "flex";
 }
-
-let lightboxEffect = document.getElementById("lightbox-effect");
-lightboxEffect.addEventListener("click", (e) => {
-  if(e.target == e.currentTarget){
-    lightboxEffect.style.display = "none";
-  }
-})
 
 function createThumbnail(img, index) {
   const thumbUrl = `https://farm${img.farm}.staticflickr.com/${img.server}/${img.id}_${img.secret}_t.jpg`;
