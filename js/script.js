@@ -39,10 +39,16 @@ searchForm.addEventListener("submit", (event) => {
   event.preventDefault();
   searchImages();
 });
+const lightboxEffect = document.getElementById("lightbox-effect");
+lightboxEffect.addEventListener("click", (e) => {
+  if (e.target == e.currentTarget) {
+    lightboxEffect.style.display = "none";
+  }
+});
 
 // Main function
 async function fetchImage(keyword, currentPage) {
-  const apiUrl = `${baseUrl}?api_key=${pubkey}&method=${method}&text=${keyword}&page=${currentPage}&per_page=${photosPerPage}&format=json&nojsoncallback=1`;
+  const apiUrl = `${baseUrl}?api_key=${pubkey}&method=${method}&text=${keyword}&page=${currentPage}&per_page=${photosPerPage}&format=json&nojsoncallback=1&media=photos`;
   try {
     const response = await fetch(apiUrl);
     // Fetches photos from our data (data.photos)
@@ -64,7 +70,7 @@ async function fetchImage(keyword, currentPage) {
 function loadImage(img, index) {
   const imgUrl = `https://farm${img.farm}.staticflickr.com/${img.server}/${img.id}_${img.secret}_q.jpg`;
   const imgElement = document.createElement("img");
-
+  imgElement.classList.add("image");
   // Our API response gives imgElement the sourceimage, and we add alt-text functionality
   imgElement.src = imgUrl;
   imgElement.setAttribute("alt", img.title);
@@ -98,7 +104,8 @@ function openLightbox(img, index) {
   }
   const lightboxThumb2 = createThumbnail(img, index);
   lightboxThumbnail.appendChild(lightboxThumb2);
-  lightboxThumb2.classList.add("active-thumb");
+  lightboxThumb2.classList.add("lightbox__thumb--active");
+
   if (nextIndex < photoArray.length) {
     const lightboxThumb3 = createThumbnail(photoArray[nextIndex], nextIndex);
     lightboxThumbnail.appendChild(lightboxThumb3);
@@ -112,6 +119,7 @@ function openLightbox(img, index) {
 function createThumbnail(img, index) {
   const thumbUrl = `https://farm${img.farm}.staticflickr.com/${img.server}/${img.id}_${img.secret}_t.jpg`;
   const thumb = document.createElement("img");
+  thumb.classList.add("lightbox__thumb");
   thumb.addEventListener("click", () => {
     openLightbox(photoArray[index], index);
   });
