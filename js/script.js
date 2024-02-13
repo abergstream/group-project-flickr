@@ -17,9 +17,8 @@ const imagePerPage = document.querySelector(".img-per-page");
 
 imagePerPage.addEventListener("change", () => {
   photosPerPage = imagePerPage.value;
-  fetchImage(query, currentPage)
-})
-
+  fetchImage(query, currentPage);
+});
 
 async function fetchImage(keyword, currentPage) {
   imgContainer.innerHTML = "";
@@ -38,11 +37,9 @@ async function fetchImage(keyword, currentPage) {
     photos.photo.forEach((img, index) => {
       loadImage(img, index);
     });
-
   } catch (error) {
     console.error("Error: " + error);
   }
-
 }
 
 const prevPage = document.getElementById("button-prev-page");
@@ -78,8 +75,6 @@ function loadImage(img, index) {
 }
 
 function openLightbox(img, index) {
-  prevIndex = index - 1;
-  nextIndex = index + 1;
   const lightboxPhoto = document.getElementById("lightboxPhoto");
   const lightboxThumbnail = document.getElementById("lightboxThumbnail");
   const lightbox = document.querySelector(".lightbox");
@@ -87,14 +82,24 @@ function openLightbox(img, index) {
   const imgUrl = `https://farm${img.farm}.staticflickr.com/${img.server}/${img.id}_${img.secret}_b.jpg`;
   lightboxPhoto.src = imgUrl;
   console.log(img);
-
-  const lightboxThumb1 = createThumbnail(photoArray[prevIndex], prevIndex);
-  const lightboxThumb2 = createThumbnail(img, index);
-  lightboxThumb2.classList.add("active-thumb");
-  const lightboxThumb3 = createThumbnail(photoArray[nextIndex], nextIndex);
-
   lightboxThumbnail.innerText = "";
-  lightboxThumbnail.append(lightboxThumb1, lightboxThumb2, lightboxThumb3);
+
+  prevIndex = index - 1;
+  nextIndex = index + 1;
+
+  if (index > 0) {
+    const lightboxThumb1 = createThumbnail(photoArray[prevIndex], prevIndex);
+    lightboxThumbnail.appendChild(lightboxThumb1);
+  }
+
+  const lightboxThumb2 = createThumbnail(img, index);
+  lightboxThumbnail.appendChild(lightboxThumb2);
+  lightboxThumb2.classList.add("active-thumb");
+
+  if (nextIndex < photoArray.length) {
+    const lightboxThumb3 = createThumbnail(photoArray[nextIndex], nextIndex);
+    lightboxThumbnail.appendChild(lightboxThumb3);
+  }
   lightbox.style.display = "flex";
 }
 
@@ -103,12 +108,10 @@ function createThumbnail(img, index) {
   const thumb = document.createElement("img");
   thumb.addEventListener("click", () => {
     openLightbox(photoArray[index], index);
-  })
+  });
   thumb.src = thumbUrl;
   return thumb;
 }
-
-
 
 function loadPagination(page, pages, keyword) {
   currentPage = page;
