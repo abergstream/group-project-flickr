@@ -64,6 +64,7 @@ async function fetchImage(keyword, currentPage) {
     });
   } catch (error) {
     console.error("Error: " + error);
+    alert("An error has occurred! Please try again later!")
   }
 }
 
